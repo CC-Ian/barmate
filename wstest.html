@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WebSocket Test</title>
+</head>
+<body>
+    <h1>Weight Data</h1>
+    <p id="weight">Waiting for data...</p>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.4.1/socket.io.min.js"></script>
+    <script>
+        // Connect to the WebSocket server
+        const socket = io('http://192.168.50.124:3002');
+
+        // Listen for 'weight_update' event and update the display
+        socket.on('weight_update', function(data) {
+            document.getElementById('weight').textContent = "Weight: " + data.weight + " grams";
+        });
+
+        socket.on('connect', function() {
+            console.log("Connected to WebSocket server");
+        });
+
+        socket.on('disconnect', function() {
+            console.log("Disconnected from WebSocket server");
+        });
+    </script>
+</body>
+</html>
